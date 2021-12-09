@@ -1,0 +1,11 @@
+﻿body, table, input, select {
+    font: 11pt Calibri;
+}
+
+.error {
+    color: red;
+    background-image: url("../images/error.png");
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 20px;
+}

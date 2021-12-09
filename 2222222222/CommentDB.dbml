@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CommentDB" Class="CommentDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\CommentDB.mdf;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="CommentDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Reply" Member="Replies">
+    <Type Name="Reply">
+      <Column Name="replyID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="commentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="userID" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="content" Type="System.String" DbType="VarChar(800) NOT NULL" CanBeNull="false" />
+      <Column Name="replyDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="[like]" Member="like" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="User_Reply" Member="User" ThisKey="userID" OtherKey="userID" Type="User" IsForeignKey="true" />
+      <Association Name="Comment_Reply" Member="Comment" ThisKey="commentID" OtherKey="commentID" Type="Comment" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[User]" Member="Users">
+    <Type Name="User">
+      <Column Name="userID" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="userName" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="userEmail" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="userContactNo" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+      <Column Name="userPassword" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="walletBalance" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
+      <Column Name="userType" Type="System.String" DbType="VarChar(6) NOT NULL" CanBeNull="false" />
+      <Association Name="User_Reply" Member="Replies" ThisKey="userID" OtherKey="userID" Type="Reply" />
+      <Association Name="User_RecipePost" Member="RecipePosts" ThisKey="userID" OtherKey="userID" Type="RecipePost" />
+      <Association Name="User_Comment" Member="Comments" ThisKey="userID" OtherKey="userID" Type="Comment" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RecipePost" Member="RecipePosts">
+    <Type Name="RecipePost">
+      <Column Name="recipeID" Type="System.String" DbType="Char(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="userID" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="recipeCategory" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="recipeDesc" Type="System.String" DbType="VarChar(800) NOT NULL" CanBeNull="false" />
+      <Column Name="recipeTitle" Type="System.String" DbType="VarChar(35) NOT NULL" CanBeNull="false" />
+      <Column Name="recipeServings" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="recipeIngredients" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="cookingSteps" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="recipeImage" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="recipePrice" Type="System.Decimal" DbType="Decimal(3,2) NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="RecipePost_Comment" Member="Comments" ThisKey="recipeID" OtherKey="recipeID" Type="Comment" />
+      <Association Name="User_RecipePost" Member="User" ThisKey="userID" OtherKey="userID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Comment" Member="Comments">
+    <Type Name="Comment">
+      <Column Name="commentID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="recipeID" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="userID" Type="System.String" DbType="Char(5) NOT NULL" CanBeNull="false" />
+      <Column Name="content" Type="System.String" DbType="VarChar(800) NOT NULL" CanBeNull="false" />
+      <Column Name="commentDate" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="[like]" Member="like" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Comment_Reply" Member="Replies" ThisKey="commentID" OtherKey="commentID" Type="Reply" />
+      <Association Name="RecipePost_Comment" Member="RecipePost" ThisKey="recipeID" OtherKey="recipeID" Type="RecipePost" IsForeignKey="true" />
+      <Association Name="User_Comment" Member="User" ThisKey="userID" OtherKey="userID" Type="User" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
