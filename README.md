@@ -8,6 +8,7 @@ Functions
 - User Feedback form
 - Feedback list
 - Data reporting module
+- Input Validation
 
 Allowing users to share their recipes on the website, give comments and star ratings, reply to the comments, give feedback to the website, and click on the like button on the good recipes.
 
